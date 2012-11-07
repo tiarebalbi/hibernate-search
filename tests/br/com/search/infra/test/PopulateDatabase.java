@@ -13,9 +13,11 @@ import br.com.search.model.Project;
 
 public class PopulateDatabase {
 
+	private EntityManager entityManager;
+
 	@Test
 	public void populateDatabase() throws Exception {
-		EntityManager entityManager = new JPAUtil().getEntityManager();
+		entityManager = new JPAUtil().getEntityManager();
 		entityManager.getTransaction().begin();
 
 		removeProjects(entityManager);
@@ -23,6 +25,34 @@ public class PopulateDatabase {
 		TypedQuery<Developer> query = entityManager.createQuery("select d from Developer d", Developer.class);
 		removeDevelopers(entityManager, query);
 		
+		facebookProject();
+		
+		twitterProject();
+		
+		linkedinProject();
+		
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+
+	private void linkedinProject() {
+		Project linkedin = new Project("Linkedin");
+		linkedin.setCategory("social job networking friends job service grups");
+		linkedin.addDeveloper(new Developer("Peterpan Sanderzin"));
+		linkedin.addDeveloper(new Developer("Peterson August"));
+		entityManager.persist(linkedin);
+	}
+
+	private void twitterProject() {
+		Project twitter = new Project("Twitter");
+		twitter.setCategory("socialnetworking friends serivce jobs follow follower following entertainm recreat");
+		twitter.addDeveloper(new Developer("Karl Chuow"));
+		twitter.addDeveloper(new Developer("Karla Sandez"));
+		twitter.addDeveloper(new Developer("Peter Sandz"));
+		entityManager.persist(twitter);
+	}
+
+	private void facebookProject() {
 		Project facebook = new Project("Facebook");
 		facebook.setCategory("socialnetworking friends service entertainment diversion recreation groups");
 		facebook.addDeveloper(new Developer("Josh Saverin"));
@@ -30,22 +60,6 @@ public class PopulateDatabase {
 		facebook.addDeveloper(new Developer("Carl Fox"));
 		facebook.addDeveloper(new Developer("Carlos Santana"));
 		entityManager.persist(facebook);
-		
-		Project twitter = new Project("Twitter");
-		twitter.setCategory("socialnetworking friends serivce jobs follow follower following entertainm recreat");
-		twitter.addDeveloper(new Developer("Karl Chuow"));
-		twitter.addDeveloper(new Developer("Karla Sandez"));
-		twitter.addDeveloper(new Developer("Peter Sandz"));
-		entityManager.persist(twitter);
-		
-		Project linkedin = new Project("Linkedin");
-		linkedin.setCategory("social job networking friends job service grups");
-		linkedin.addDeveloper(new Developer("Peterpan Sanderzin"));
-		linkedin.addDeveloper(new Developer("Peterson August"));
-		entityManager.persist(linkedin);
-		
-		entityManager.getTransaction().commit();
-		entityManager.close();
 	}
 
 	private void removeDevelopers(EntityManager entityManager,
