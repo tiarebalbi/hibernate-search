@@ -31,7 +31,7 @@ public class IndexingTest {
 	
 
 	private void removeFolder() {
-		filePath = "/home/alexandre/lucene/br.com.search.model.Project";
+		filePath = "lucene/indexes/br.com.search.model.Project";
 		File file2 = new File(filePath);
 		
 		file2.deleteOnExit();
